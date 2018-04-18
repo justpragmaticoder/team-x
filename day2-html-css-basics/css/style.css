@@ -1,0 +1,303 @@
+@font-face {
+	font-family: "DeliciousSmallCaps";
+	src: url("../fonts/Delicious-SmallCaps/Delicious-SmallCaps.eot");
+	src: url("../fonts/Delicious-SmallCaps/Delicious-SmallCaps.eot?#iefix")format("embedded-opentype"),
+	url("../fonts/Delicious-SmallCaps/Delicious-SmallCaps.otf")format("opentype"),
+	url("../fonts/Delicious-SmallCaps/Delicious-SmallCaps.woff") format("woff"),
+	url("../fonts/Delicious-SmallCaps/Delicious-SmallCaps.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+}
+@font-face {
+	font-family: "DroidSerifRegular";
+	src: url("../fonts/DroidSerifRegular/DroidSerifRegular.eot");
+	src: url("../fonts/DroidSerifRegular/DroidSerifRegular.eot?#iefix")format("embedded-opentype"),
+	url("../fonts/DroidSerifRegular/DroidSerifRegular.otf")format("opentype"),
+	url("../fonts/DroidSerifRegular/DroidSerifRegular.woff") format("woff"),
+	url("../fonts/DroidSerifRegular/DroidSerifRegular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+}
+
+body {
+	background: #f0f0f0;
+	color: #686868;
+	font-size: 15px;
+}
+a {
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
+}
+.wrapper {
+	max-width: 960px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+.header .wrapper {
+	padding: 28px 0;
+	margin-bottom: 28px;
+	border-bottom: 1px solid #d6d6d6;
+}
+.header .wrapper:after, 
+.social-icons:after,
+.main-center ul:after,
+.colums:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.logo {
+	display: inline-block;
+}
+
+.menu {
+	float: right;
+	margin-top: 20px;
+	font-family: 'DeliciousSmallCaps', serif;
+}
+.menu li {
+	display: inline-block;
+	margin-left: 17px;
+}
+.menu li a{
+	display: block;
+	text-decoration: none;
+	font-size: 14px;
+	color: #4b4b4b;
+    line-height: 15px;
+} 
+.menu li .active,
+.menu li a:hover,
+.menu li a:focus,
+.popular-posts .article-title:hover,
+.popular-posts .article-title:focus {
+	color: #ad6069;
+}
+
+/* MAIN */
+main {
+	margin-bottom: 54px;
+}
+.main-top {
+	border-bottom: 1px solid #d6d6d6;
+	margin-bottom: 38px;
+    padding-bottom: 28px;
+}
+.main-top .text {
+	display: inline-block;
+	width: 71%;
+	font-family: 'DroidSerifRegular', serif;
+	font-size: 20px;
+    line-height: 30px;
+    border-right: 1px solid #d6d6d6;
+    padding-right: 29px;
+    color: #878787;
+}
+
+.social-icons {
+	width: 240px;
+	float: right;
+}
+.social-icons h3, 
+.social-icons ul {
+	padding-left: 30px;
+}
+.social-icons h3,
+.main-bottom .container h3 {
+	font-size: 20px;
+	font-family: 'DeliciousSmallCaps';
+    color: #4b4b4b;
+    margin-bottom: 10px;
+    line-height: 21px;
+}
+.social-icons ul li {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.main-center {
+	margin-bottom: 38px;
+}
+.main-center ul,
+.main-bottom .colums {
+	margin-right: -30px;
+}
+.main-center ul li {
+	float: left;
+	text-align: center;
+	margin: 0 20px 20px 0;
+	box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.3);
+}
+.main-center ul li img {
+	display: block;
+	width: 225px;
+    height: 183px;
+}
+.slide-text {
+	background: #fff;
+	font-size: 18px;
+	font-family: 'DeliciousSmallCaps';
+	color: #4b4b4b;
+	padding: 10px;
+}
+
+.main-bottom .line {
+	margin-bottom: 34px;
+}
+.main-bottom .container h3 {
+	margin-bottom: 15px;
+}
+.container {
+    width: 300px;
+    float: left;
+    margin-right: 30px;
+}
+.container h3 {
+	background-color: #fff;
+	margin-bottom: 13px;
+    padding: 8px 10px;
+    box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.3);
+}
+.container .popular-posts li {
+	clear: both;
+    padding-top: 15px;
+    line-height: 17px;
+}
+.container .popular-posts li:first-child {
+	padding-top: 0px;
+}
+.container .popular-posts li img {
+	display: block;
+	background: #fff;
+	width: 55px;
+    height: 55px;
+	float: left;
+    margin-right: 15px;
+    padding: 5px;
+    box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.25);
+}
+.container .article-title {
+	display: block;
+	color: #686868;
+	text-decoration: none;
+	font-size: 14px;
+    line-height: 18px;
+    font-family: 'DeliciousSmallCaps', serif;
+    margin-bottom: 10px;
+}
+.container .article-date {
+	display: block;
+	line-height: 17px;
+	font-family: 'DroidSerifRegular', serif;
+	font-size: 11px;
+}
+.container .twitter-posts li {
+	background: transparent url(../img/icon-bird.png) no-repeat left 3px;
+	padding: 0 0 0 28px;
+    line-height: 25px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+.container .twitter-posts li:last-child {
+	border-bottom: none;
+}
+.container .twitter-posts .twitter-date {
+	display: block;
+}
+.container .twitter-posts a {
+	text-decoration: none;
+	color: #ad6069;
+}
+.container .twitter-posts a:hover,
+.container .twitter-posts a:focus {
+	text-decoration: underline;
+}
+.container .twitter-posts li {
+	font-family: 'DroidSerifRegular';
+    color: #686868;
+    font-size: 14px;
+}
+
+.contact ul li {
+	margin-bottom: 15px;
+	font-family: 'DroidSerifRegular', serif;
+	font-size: 13px;
+}
+.contact ul li:last-child {
+	margin-bottom: 5px;
+}
+.contact ul li input {
+	display: block;
+	outline: none;
+}
+.contact ul li .field {
+	color: #686868;
+	width: 278px;
+    height: 21px;
+    line-height: 21px;
+    padding: 5px 10px;
+    font-size: 13px;
+    border: 1px solid #e2e2e2;
+    background-color: #e2e2e2;
+    font-family: 'DroidSerifRegular';
+}
+.contact ul li .field:focus,
+.contact ul li textarea:focus {
+    border: 1px solid #878787;
+}
+.contact ul li textarea {
+	width: 278px;
+    height: 120px;
+    color: #686868;
+    padding: 10px 10px;
+    line-height: 24px;
+    border: 1px solid #e2e2e2;
+    background-color: #e2e2e2;
+    resize: none;
+}
+.contact ul li input[type="submit"] {
+	background-color: #5b5b5b;
+    border: 1px solid #1e1e1e;
+    height: 28px;
+    color: #fff;
+    padding: 0px 20px 5px 20px;
+    line-height: 28px;
+    cursor: pointer;
+    font-family: 'DroidSerifRegular';
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3);
+}
+.contact ul li input[type="submit"]:hover,
+.contact ul li input[type="submit"]:focus {
+	background-color: #686868;;
+}
+
+/* FOOTER */
+.footer {
+	background: #222222;
+	height: 31px;
+	color: #878787;
+	padding: 10px 0
+}
+.footer span {
+	display: inline-block;
+	font-family: 'DroidSerifRegular';
+	margin: 9px 0 0 0;
+    line-height: 1;
+    font-size: 12px;
+}
+.footer a {
+	display: block;
+	background: #000 url(../img/icon-top.png) no-repeat top center;
+    width: 31px;
+    height: 31px;
+    float: right;
+}
+.footer a:hover,
+.footer a:focus {
+	background-position: bottom center;
+}
