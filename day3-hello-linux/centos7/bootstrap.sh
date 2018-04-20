@@ -1,0 +1,10 @@
+sudo yum update -y
+sudo yum install httpd -y
+
+if ! [ -L /var/www ]; then
+  rm -rf /var/www
+  ln -fs /vagrant /var/www
+fi
+
+sudo systemctl start httpd
+sudo systemctl restart httpd
