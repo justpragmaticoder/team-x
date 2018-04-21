@@ -1,0 +1,102 @@
+body {
+	background: url(../img/background.jpg) repeat;
+}
+p {
+	display: inline-block;
+}
+
+.todo-wrapper {
+	max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.input-field {
+	margin: 0 0 10px -15px;
+}
+body, input[type=text] {
+	font-family: cursive, serif;
+	font-size: 15px;
+}
+input[type=text] {
+	width: 372px;
+	height: 20px;
+	opacity: 0.6;
+	border: none;
+}
+input {
+	outline: none;
+}
+input:focus {
+	box-shadow: 0 0 1em red;
+}
+
+.task-container {
+	width: 400px;
+	height: 500px;
+	background: url(../img/list.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-top: -25px;
+}
+.list-frame {
+	padding: 90px 20px 10px 10px;
+}
+.single-task {
+	position: relative;
+	margin-bottom: 10px;
+}
+.single-task:hover span {
+	display: inline-block;
+}
+.single-task input[type=checkbox] {
+	position: absolute;
+	top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+.single-task input[type=checkbox]:checked + p {
+	text-decoration: line-through;
+}
+.single-task .task-text {
+	width: 90%;
+	text-align: justify;
+	word-wrap: break-word;
+}
+.single-task p[class=task-text] {
+	padding-left: 20px;
+}
+input[class=task-text] {
+	opacity: 0.4;
+	outline: none;
+	margin-left: 20px;
+	box-shadow: 0 0 5px red;
+}
+
+.delete {
+	display: none;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	right: -2%;
+	top: 0;
+	bottom: 0;
+	margin: auto 0;
+	opacity: 0.3;
+}
+.delete:hover {
+	opacity: 1;
+}
+.delete:before, .delete:after {
+	position: absolute;
+	content: ' ';
+	height: 16px;
+	width: 2px;
+	background-color: #333;
+}
+.delete:before {
+	transform: rotate(45deg);
+}
+.delete:after {
+	transform: rotate(-45deg);
+}
