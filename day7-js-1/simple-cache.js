@@ -1,5 +1,5 @@
 var cache = {
-	limit : 100,
+	limit : 100, //Cache size limit
 	stack: {}, //Cache stack
 	get: function(id){ //Gets cache if found
 		return (typeof(this.stack[id]) != 'undefined') ? this.stack[id] : false;
