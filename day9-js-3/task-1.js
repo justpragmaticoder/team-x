@@ -14,6 +14,7 @@ function QueueRunner(someFunc) {
     	if(!this.cleanup) {
     		throw "CANCELLED error";
     		this.queue.length = 0;
+    		this.cleanup = false;
     		return elem[1];
     	}
     }
