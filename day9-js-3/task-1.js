@@ -2,25 +2,20 @@ function QueueRunner(someFunc) {
     this.queue = []; //Stores objects in the form of { data: <any>, onFinish: <someFunc> }
     this.handler = someFunc; //A function for processing
     this.pause = false; //A pause flag
-    this.resume = false; //A resume flag
-    this.lastOnFinish; //An onFinish function of the pending items
+    this.cleanup = false; //A cleanup flag
     
     if(this.queue.length != 0) {
-    	for(let i = 0; i < this.queue.length; i++) {
-    		let elem = Object.values(this.queue[i]);
-    		if(!this.pause && !this.resume) {
-    			for(key in elem[0]) {
-    				this.handler(key, elem[1]);
-    			}
-    			continue;
+    	let elem = Object.values(this.queue[0]);
+    	if(!this.pause && !this.cleanup) {
+    		for(key in elem[0]) {
+    			this.handler(key, elem[1]);
     		}
-    		this.lastOnFinish = elem[1];
-    		break;
     	}
-    }
-    if(!this.resume) {
-    	throw "CANCELLED error";
-    	return this.lastOnFinish;
+    	if(!this.cleanup) {
+    		throw "CANCELLED error";
+    		this.queue.length = 0;
+    		return elem[1];
+    	}
     }
 }
 
@@ -34,9 +29,8 @@ QueueRunner.prototype.pause = function () {
 
 QueueRunner.prototype.resume = function () {
 	this.pause = false;
-	this.resume = true;
 };
 
 QueueRunner.prototype.cleanup = function () {
-	this.queue.length = 0;
+	this.cleanup = true;
 };
