@@ -1,32 +1,58 @@
 function QueueRunner(someFunc) {
-    this.queue = []; //Stores objects in the form of { data: <any>, onFinish: <someFunc> }
-    this.handler = someFunc; //A function for processing
-    this.pause = false; //A pause flag
-    this.lastOnFinishFunc = function() {};
+    let queue = []; //Stores objects in the form of { data: <any>, onFinish: <someFunc> }
+    let pause = false; //A pause flag
+
+    function processFunc() {
+        if(!pause && queue.length > 0) {
+            const elem = queue.shift();
+            someFunc(elem.data, elem.onFinish);
+        }
+    }
+
+    return {
+        push: (userData, onFinishFunc) => {
+            queue.push({data: userData, onFinish: onFinishFunc});
+            processFunc();
+        },
+        pause: () => {
+            pause = true;
+        },
+        resume: () => {
+            pause = false;
+            processFunc();
+        },
+        cleanup: () => {
+            console.log("CANCELLED error");
+            if(queue.length > 0) {
+                const elem = queue.shift();
+                elem.onFinish();
+            }
+            queue.length = 0;
+        }
+    }
+
 }
 
-QueueRunner.prototype.push = function (obj) {
-	this.queue.push(obj);
-	let elem = Object.values(this.queue[0]);
-    if(!this.pause) {
-        this.handler(elem[0], elem[1]);
-    } else {
-        this.lastOnFinishFunc = elem[1];
-    }
-    if(this.queue.length > 1) {
-    	this.queue.shift();
-    }
-};
+//Very simple test
+let qr = QueueRunner((data, onFinish) => {
+    console.log(data);
+    onFinish();
+});
 
-QueueRunner.prototype.pause = function () {
-	this.pause = true;
-};
+qr.push({name: 'Vasya', age: '22'}, () => {
+    console.log('Done!');
+});
 
-QueueRunner.prototype.resume = function () {
-	this.pause = false;
-};
+qr.pause();
 
-QueueRunner.prototype.cleanup = function () {
-    console.log("CANCELLED error");
-    this.lastOnFinishFunc();
-};
+qr.push({name: 'Petya', age: '23'}, () => {
+    console.log('Done!');
+});
+
+qr.push({name: 'Ivan', age: '25'}, () => {
+    console.log('Done!');
+});
+
+qr.cleanup();
+
+qr.resume();
