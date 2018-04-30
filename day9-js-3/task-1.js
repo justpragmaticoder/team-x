@@ -4,20 +4,18 @@ function QueueRunner(someFunc) {
     let inProgress = false;
 
     function processFunc() {
-        if (!pause && queue.length > 0) {
-            const elem = queue.shift();
-            someFunc(elem.data, () => {
-                elem.onFinish();
-                if (queue.length > 0) processFunc();
-                inProgress = false;
-            });
-        }
+        const elem = queue.shift();
+        someFunc(elem.data, () => {
+            elem.onFinish();
+            if (queue.length > 0) processFunc();
+            inProgress = false;
+        });
     }
 
     return {
         push: (userData) => {
-            queue.push({data: userData.data, onFinish: userData.onFinish});
-            if (!inProgress) {
+            queue.push(userData);
+            if (!inProgress && !pause) {
                 inProgress = true;
                 processFunc();
             }
