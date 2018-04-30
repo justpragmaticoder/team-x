@@ -1,18 +1,26 @@
 function QueueRunner(someFunc) {
     let queue = []; //Stores objects in the form of { data: <any>, onFinish: <someFunc> }
-    let pause = false; //A pause flag
+    let pause = false; //A pause flag;
+    let inProgress = false;
 
     function processFunc() {
-        if(!pause && queue.length > 0) {
+        if (!pause && queue.length > 0) {
             const elem = queue.shift();
-            someFunc(elem.data, elem.onFinish);
+            someFunc(elem.data, () => {
+                elem.onFinish();
+                if (queue.length > 0) processFunc();
+                inProgress = false;
+            });
         }
     }
 
     return {
-        push: (userData, onFinishFunc) => {
-            queue.push({data: userData, onFinish: onFinishFunc});
-            processFunc();
+        push: (userData) => {
+            queue.push({data: userData.data, onFinish: userData.onFinish});
+            if (!inProgress) {
+                inProgress = true;
+                processFunc();
+            }
         },
         pause: () => {
             pause = true;
@@ -23,36 +31,36 @@ function QueueRunner(someFunc) {
         },
         cleanup: () => {
             console.log("CANCELLED error");
-            if(queue.length > 0) {
+            if (queue.length > 0) {
                 const elem = queue.shift();
                 elem.onFinish();
             }
             queue.length = 0;
         }
     }
-
 }
 
-//Very simple test
-let qr = QueueRunner((data, onFinish) => {
-    console.log(data);
-    onFinish();
+//Test
+var q = QueueRunner((data, onFinish) => {
+
+    setTimeout(() => {
+        console.log(data.id, data.name);
+        onFinish();
+    }, data.timeout)
 });
 
-qr.push({name: 'Vasya', age: '22'}, () => {
-    console.log('Done!');
-});
+var onFinish = (name) => {
+    return () => console.log('Finished: ' + name);
+};
 
-qr.pause();
+console.log('start');
 
-qr.push({name: 'Petya', age: '23'}, () => {
-    console.log('Done!');
-});
+q.push({data: {id: 1, name: 'Text 1', timeout: 2000}, onFinish: onFinish('Text1')});
 
-qr.push({name: 'Ivan', age: '25'}, () => {
-    console.log('Done!');
-});
+q.push({data: {id: 2, name: 'Text 2', timeout: 3000}, onFinish: onFinish('Text2')});
 
-qr.cleanup();
+q.push({data: {id: 3, name: 'Text 3', timeout: 500}, onFinish: onFinish('Text3')});
 
-qr.resume();
+q.push({data: {id: 4, name: 'Text 4', timeout: 1500}, onFinish: onFinish('Text4')});
+
+console.log('Finished');
