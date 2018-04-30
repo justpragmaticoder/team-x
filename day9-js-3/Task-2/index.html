@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        .time-left, input, .statistics {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .time-left, .statistics {
+            font-family: Georgia, sans-serif;
+            font-weight: normal;
+            text-shadow: 0 0 20px transparent;
+            color: rgb(212, 75, 56);
+        }
+
+        .time-left {
+            margin: -100px 0 0 -211px;
+            font-family: Georgia, sans-serif;
+            font-size: 50px;
+        }
+
+        #timer {
+            color: transparent;
+            animation: shadows 1s infinite ease-in;
+        }
+
+        @keyframes shadows {
+            10% {
+                text-shadow: 0 0px 1px hsl(0, 100%, 40%);
+            }
+            60% {
+                text-shadow: 0 0px 1px crimson;
+            }
+            90% {
+                text-shadow: 0 30px 40px transparent;
+            }
+        }
+
+        input {
+            width: 200px;
+            height: 40px;
+            margin-left: -100px;
+            color: #fff;
+            text-decoration: none;
+            background: rgb(212, 75, 56);
+            padding: .7em 1.5em;
+            outline: none;
+            border: none;
+        }
+
+        input:hover {
+            background: rgb(232, 95, 76);
+        }
+
+        input:active, input:disabled {
+            background: rgb(152, 15, 0);
+        }
+
+        .statistics {
+            margin: 100px 0 0 -255px;
+            font-size: 30px;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+            const socket = io();
+
+            $('#submit_button').on('click', () => {
+                socket.emit('click', () => {
+                });
+            });
+
+            socket.on('counter', (counter) => {
+                $('#clicks').html(counter);
+                console.log(counter);
+            });
+
+            socket.on('active', () => {
+                $('#active').html('You have:');
+                $('#submit_button').prop('disabled', false);
+                $('.time-left').css('margin-left', '-230px');
+            });
+
+            socket.on('wait', () => {
+                $('#active').html('You have to wait:');
+                $('#submit_button').prop("disabled", true);
+                $('.time-left').css('margin-left', '-310px');
+            });
+
+            socket.on('time left', (secondsLeft) => {
+                $('#timer').html(secondsLeft);
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="time-left"><span id="active">You have:</span><span id="timer">60</span> seconds</div>
+
+<input type="submit" value="Click me!" id="submit_button" disabled/>
+
+<div class="statistics">You made <span id="clicks">0</span> clicks during the last try :)</div>
+</body>
+</html>
