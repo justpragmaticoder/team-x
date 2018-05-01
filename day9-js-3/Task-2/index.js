@@ -11,16 +11,6 @@ let connectedUsers = [];
 /* A counter that shows an amount of user's clicks during his "active" time. */
 let counter = 0;
 
-/* Sends messages to the all connected users who have to wait for their turn. */
-function markPendingUsers() {
-    if (connectedUsers.length > 1) {
-        for (let i = 1; i < connectedUsers.length; i++) {
-            connectedUsers[i].emit('wait', () => {
-            });
-        }
-    }
-}
-
 /* Monitors the time left for each user in the queue. */
 function notifyTimeLeft() {
     let secondsLeft = 60;
@@ -48,7 +38,6 @@ function processUser() {
             localCounter = counter;
             active.emit('counter', counter);
         }
-        markPendingUsers();
     }, 50);
 }
 
@@ -56,7 +45,9 @@ function processUser() {
 function setNextActive() {
     setTimeout(() => {
         if (connectedUsers.length > 0) {
-            connectedUsers.push(connectedUsers.shift());
+            let lastActive = connectedUsers.shift();
+            connectedUsers.push(lastActive);
+            lastActive.emit('wait', () => {});
             processUser();
         }
         setNextActive();
