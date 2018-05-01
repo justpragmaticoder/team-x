@@ -17,13 +17,15 @@
         }
 
         .time-left {
-            margin: -100px 0 0 -211px;
+            margin: -200px 0 0 -190px;
             font-family: Georgia, sans-serif;
             font-size: 50px;
+            text-align: center;
         }
 
         #timer {
             color: transparent;
+            text-align: center;
             animation: shadows 1s infinite ease-in;
         }
 
@@ -83,13 +85,13 @@
             socket.on('active', () => {
                 $('#active').html('You have:');
                 $('#submit_button').prop('disabled', false);
-                $('.time-left').css('margin-left', '-230px');
+                $('.time-left').css('margin-left', '-109px');
             });
 
             socket.on('wait', () => {
                 $('#active').html('You have to wait:');
                 $('#submit_button').prop("disabled", true);
-                $('.time-left').css('margin-left', '-310px');
+                $('.time-left').css('margin-left', '-190px');
             });
 
             socket.on('time left', (secondsLeft) => {
@@ -100,7 +102,11 @@
 </head>
 <body>
 
-<div class="time-left"><span id="active">You have:</span><span id="timer">60</span> seconds</div>
+<div class="time-left">
+    <div id="active">You have to wait:</div>
+    <div id="timer">60</div>
+    seconds
+</div>
 
 <input type="submit" value="Click me!" id="submit_button" disabled/>
 
