@@ -1,8 +1,12 @@
-const http = require('http');
-const fs = require('fs');
-const index = fs.readFileSync('day2-html-css-basics/index.html');
+const express = require('express');
+const app = express();
+const path = require('path');
 
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(index);
-}).listen(3000);
+app.use(express.static(path.join(__dirname, 'day2-html-css-basics')));
+app.get('/', function (req, res) {
+    res.redirect('index.html');
+});
+
+app.listen("8080", () => {
+    console.log("Server works!");
+});
