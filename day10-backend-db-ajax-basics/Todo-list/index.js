@@ -26,7 +26,7 @@ var jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = 'tasmanianDevil';
 
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
+var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
     console.log('payload received', jwt_payload);
     let sql = "SELECT * FROM users WHERE id = '" + jwt_payload.id + "' ORDER BY id DESC";
     connection.query(sql, function (err, result) {
@@ -41,29 +41,29 @@ var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
 passport.use(strategy);
 /* End strategy*/
 
-app.post("/login", function(req, res) {
-    if(req.body.name && req.body.password){
+app.post("/login", function (req, res) {
+    if (req.body.name && req.body.password) {
         var name = req.body.name;
         var password = req.body.password;
     }
-    let sql = "SELECT * FROM users WHERE user = '"+ name +"' ORDER BY id DESC";
+    let sql = "SELECT * FROM users WHERE user = '" + name + "' ORDER BY id DESC";
     connection.query(sql, function (err, result) {
         if (err) throw err;
         let user = result[0];
-        if( ! user ){
-            res.status(401).json({message:"no such user found"});
+        if (!user) {
+            res.status(401).json({message: "no such user found"});
         }
-        if(user.password === password) {
+        if (user.password === password) {
             // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
             let payload = {id: user.id};
             let token = jwt.sign(payload, jwtOptions.secretOrKey);
             res.json({message: "ok", token: token});
         } else {
-            res.status(401).json({message:"passwords did not match"});
+            res.status(401).json({message: "passwords did not match"});
         }
     });
 });
-app.post("/register", function(req, res) {
+app.post("/register", function (req, res) {
     if (req.body.name && req.body.password) {
         var name = req.body.name;
         var password = req.body.password;
@@ -92,25 +92,20 @@ function handleDisconnect(client) {
     client.on('error', function (error) {
         if (!error.fatal) return;
         if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
-
         console.error('> Re-connecting lost MySQL connection: ' + error.stack);
-
-        mysqlClient = mysql.createConnection(client.config);
+        let mysqlClient = mysql.createConnection(client.config);
         handleDisconnect(mysqlClient);
         mysqlClient.connect();
     });
 }
 
-exports.connectToDataBase = function() {
-
+exports.connectToDataBase = function () {
     return connection;
-
 };
 
 /* static file */
-app.use(express.static(path.join(__dirname, 'Todo-list/../')));
 app.get('/', function (req, res) {
-   res.sendFile(path.join(__dirname, '/login.html'));
+    res.sendFile(path.join(__dirname, '/login.html'));
 });
 app.get('/Auth_script.js', (req, res) => {
     res.sendFile(path.join(__dirname + '/js/Auth_script.js'));
@@ -118,16 +113,16 @@ app.get('/Auth_script.js', (req, res) => {
 app.get('/img/background.jpg', (req, res) => {
     res.sendFile(path.join(__dirname + '/img/background.jpg'));
 });
-
+app.get('/img/list.png', (req, res) => {
+    res.sendFile(path.join(__dirname + '/img/list.png'));
+});
+app.get('/css/reset.css', (req, res) => {
+    res.setHeader('content-type', 'text/css');
+    res.sendFile(path.join(__dirname + '/css/reset.css'));
+});
 app.get('/css/style.css', (req, res) => {
     res.setHeader('content-type', 'text/css');
     res.sendFile(path.join(__dirname + '/css/style.css'));
-});
-app.get('/img/list.png', (req, res) => {
-    res.sendFile(path.join(__dirname + '/img/list.png'));
-});
-app.get('/img/list.png', (req, res) => {
-    res.sendFile(path.join(__dirname + '/img/list.png'));
 });
 
 app.get('/todo', function (req, res) {
@@ -138,7 +133,7 @@ app.get('/main.js', function (req, res) {
 });
 app.post('/show', (req, res) => {
     var values = req.body;
-    let sql = "SELECT * FROM todo WHERE removed = 0 AND user = '"+ values.user +"' ORDER BY id DESC";
+    let sql = "SELECT * FROM todo WHERE removed = 0 AND user = '" + values.user + "' ORDER BY id DESC";
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result);
@@ -156,7 +151,7 @@ app.post('/create', jsonParser, (req, res) => {
         res.send(result);
     });
 });
-app.post('/delete', passport.authenticate('jwt', { session: false }), jsonParser, (req, res) => {
+app.post('/delete', passport.authenticate('jwt', {session: false}), jsonParser, (req, res) => {
     let values = Number(req.body.delete);
     let sql = "UPDATE todo SET removed = 1 WHERE id = " + values + ";";
     connection.query(sql, function (err, result) {
