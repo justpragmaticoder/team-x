@@ -7,10 +7,18 @@ a {
 
 /* SIDEBAR-MENU */
 .sidebar-menu {
-	float: left;
-	min-width: 220px;
+	position: absolute;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+	-ms-overflow-style: none;
+	width: 220px;
 	background-color: #2A2B3C;
 	font-family: "Roboto", sans-serif;
+}
+.sidebar-menu::-webkit-scrollbar {
+ display: none;
 }
 
 .logo {
@@ -170,8 +178,15 @@ header {
 	height: 70px;
 }
 .dashboard {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
 	flex-direction: row;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
 	justify-content: space-between;
 	background-color: #F3F3F3;
 }
@@ -199,8 +214,8 @@ header {
 	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
 }
 
 .dashboard-menu {
@@ -280,7 +295,11 @@ header {
 }
 
 .right-side {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
 	justify-content: flex-end;
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -319,10 +338,10 @@ header {
 	font-weight: 600;
 	font-size: 11px;
 	top: -22%;
-    right: 0;
-    text-align: center;
-    border-radius: 50%;
-    padding: 3px 5px;
+	right: 0;
+	text-align: center;
+	border-radius: 50%;
+	padding: 3px 5px;
 }
 .icon:nth-child(even) .alerts {
 	background-color: #F5707A;
@@ -336,15 +355,27 @@ header {
 }
 .user > img {
 	height: 36px;
-    width: 36px;
-    border-radius: 50%;
+	width: 36px;
+	border-radius: 50%;
 }
 
 /* MAIN */
+main {
+	margin-left: 220px;
+}
 .bread-crumbs {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
 	flex-direction: row;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
 	justify-content: space-between;
 	height: 62px;
 	border-bottom: 1px solid #EEEEEE;
@@ -370,9 +401,9 @@ header {
 }
 .crumbs ol li:nth-child(n+2):before {
 	padding: 0 5px;
-    color: #ccc;
-    content: "/\00a0";
-    margin-right: 3px;
+	color: #ccc;
+	content: "/\00a0";
+	margin-right: 3px;
 }
 .crumbs .active-crumb {
 	color: #777;
@@ -381,21 +412,39 @@ header {
 
 /* WIDGETS */
 .widgets-area {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
 	padding: 0 10px;
 	margin-bottom: 10px;
 }
-.small-widget {
-	width: 140px;
+.small-widjets,
+.middle-widjets {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin-left: -10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+.small-widget,
+.middle-widget {
 	height: 138px;
-	margin: 10px 10px;
+	box-sizing: border-box;
 	padding: 10px 10px;
 	border-radius: 5px;
 	border: 2px solid #F3F3F3;
 	overflow: hidden;
+	margin-left: 10px;
+	margin-top: 10px;
 }
+.small-widget {
+	width: 140px;
+	flex: 1 0 140px;
+}
+.middle-widget {
+	width: 280px;
+	flex: 1 0 280px;
+}
+
 
 /* FOOTER */
