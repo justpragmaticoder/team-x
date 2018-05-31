@@ -3,22 +3,13 @@ const app = express();
 const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const knex = require('./db/knex_db_connection.js');
 
 app.use(express.static(path.join(__dirname)));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
-});
-
-const knex = require('knex')({
-    client: 'mysql',
-    connection: {
-        host: 'localhost',
-        user: 'root',
-        password: '1',
-        database: 'chat'
-    }
 });
 
 let connectedUsers = {};
