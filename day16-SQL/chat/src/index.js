@@ -1,16 +1,11 @@
 const express = require('express');
 const app = express();
-const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
 const knex = require('./db/knex_db_connection.js');
+const router = require('./routes/routes.js');
 
-app.use(express.static(path.join(__dirname)));
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
+app.use('/', router);
 
 let connectedUsers = {};
 
@@ -18,7 +13,7 @@ io.on('connection', (socket) => {
     socket.on('nickname', (nickname) => {
         if (nickname) {
             connectedUsers[socket.id] = nickname;
-            socket.broadcast.emit('chat message', makeJsonMsg(nickname, 'A new user connected'));
+            socket.broadcast.emit('user connection', makeJsonMsg(nickname, 'A new user connected'));
         }
     });
     socket.on('chat message', (msg) => {
@@ -30,24 +25,11 @@ io.on('connection', (socket) => {
     });
     socket.on('disconnect', () => {
         if (connectedUsers[socket.id]) {
-            socket.broadcast.emit('chat message', makeJsonMsg(connectedUsers[socket.id], 'User disconnected'));
+            socket.broadcast.emit('user connection', makeJsonMsg(connectedUsers[socket.id], 'User disconnected'));
             delete connectedUsers[socket.id];
         }
     });
 
-});
-
-app.get('/short-history', (req, res) => {
-    knex.select().from('mhistory').orderBy('id', 'desc').limit(10).then((records) => {
-        res.send(records);
-    });
-});
-
-app.post('/next-messages', jsonParser, (req, res) => {
-    let lastMsgId = req.body.msgId;
-    knex.select().from('mhistory').where('id', '<', lastMsgId).orderBy('id', 'desc').limit(10).then((records) => {
-        res.send(records);
-    });
 });
 
 function makeJsonMsg(nick, msg) {

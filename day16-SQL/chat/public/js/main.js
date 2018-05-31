@@ -25,6 +25,11 @@ $(function () {
         return false;
     });
 
+    socket.on('user connection', (msg) => {
+        let incomingMessage = JSON.parse(msg);
+        $('#messages').append($('<li>').text(incomingMessage.message + ": [" + incomingMessage.nickname + "]"));
+    });
+
     socket.on('chat message', (msg) => {
         let incomingMessage = JSON.parse(msg);
         $('#messages').append($('<li>').text("[" + incomingMessage.nickname + "]: " + incomingMessage.message));
